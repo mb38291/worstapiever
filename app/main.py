@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response, status
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 
@@ -17,6 +17,11 @@ class Customer(BaseModel):
 
 
 app = FastAPI()
+
+@app.get("/common.js")
+async def get_js() :
+    hdrs = {"Content-Type":"application/javascript; charset=UTF-8"}
+    return Response(status_code=status.HTTP_200_OK, headers=hdrs)
 
 @app.get("/customers")
 async def get_customer() :
