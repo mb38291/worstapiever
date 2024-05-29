@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Response, status
+from fastapi import FastAPI, HTTPException, Response, Request, status
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 
@@ -17,6 +17,11 @@ class Customer(BaseModel):
 
 
 app = FastAPI()
+
+@app.get("/headers")
+async def return_headers(request: Request):
+    my_header = request.headers.get('header-name')
+    return request.headers
 
 @app.get("/common.js")
 async def get_js() :
